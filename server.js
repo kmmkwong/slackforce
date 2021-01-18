@@ -1,5 +1,6 @@
 "use strict";
 
+// const cors = require('cors');
 let express = require('express'),
     bodyParser = require('body-parser'),
     auth = require('./modules/slack-salesforce-auth'),
@@ -16,6 +17,8 @@ app.enable('trust proxy');
 
 app.set('port', process.env.PORT || 5000);
 
+// app.use(cors());
+app.use(express.json());
 app.use('/', express.static(__dirname + '/www')); // serving company logos after successful authentication
 
 app.use(bodyParser.urlencoded({extended: true}));
