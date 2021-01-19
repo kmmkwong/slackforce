@@ -14,25 +14,25 @@ exports.execute = (req, res) => {
 
     let slackUserId = req.body.user_id,
         oauthObj = auth.getOAuthObject(slackUserId),
-        q = "SELECT Id, Name, Phone, BillingAddress FROM Account WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
+        q = "SELECT Id, Name FROM Report WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
 
     force.query(oauthObj, q)
         .then(data => {
-            let accounts = JSON.parse(data).records;
-            if (accounts && accounts.length>0) {
+            let reports = JSON.parse(data).records;
+            if (reports && reports.length>0) {
                 let attachments = [];
-                accounts.forEach(function(account) {
+                reports.forEach(function(report) {
                     let fields = [];
-                    fields.push({title: "Name", value: account.Name, short:true});
-                    fields.push({title: "Phone", value: account.Phone, short:true});
-                    if (account.BillingAddress) {
-                        fields.push({title: "Address", value: account.BillingAddress.street, short:true});
-                        fields.push({title: "City", value: account.BillingAddress.city + ', ' + account.BillingAddress.state, short:true});
-                    }
-                    fields.push({title: "Open in Salesforce:", value: oauthObj.instance_url + "/" + account.Id, short:false});
+                    fields.push({title: "Name", value: report.Name, short:true});
+                    // fields.push({title: "Phone", value: account.Phone, short:true});
+                    // if (account.BillingAddress) {
+                    //     fields.push({title: "Address", value: account.BillingAddress.street, short:true});
+                    //     fields.push({title: "City", value: account.BillingAddress.city + ', ' + account.BillingAddress.state, short:true});
+                    // }
+                    fields.push({title: "Open in Salesforce:", value: oauthObj.instance_url + "/" + report.Id, short:false});
                     attachments.push({color: "#7F8DE1", fields: fields});
                 });
-                res.json({text: "Accounts matching '" + req.body.text + "':", attachments: attachments});
+                res.json({text: "Reports matching '" + req.body.text + "':", attachments: attachments});
             } else {
                 res.send("No records");
             }

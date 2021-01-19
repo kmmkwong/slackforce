@@ -7,6 +7,8 @@ let express = require('express'),
     contact = require('./modules/contact'),
     account = require('./modules/account'),
     opportunity = require('./modules/opportunity'),
+    report = require('./modules/reports'),
+    runReport = require('./modules/runReport'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
     actions = require('./modules/actions'),
@@ -20,15 +22,23 @@ app.set('port', process.env.PORT || 5000);
 // app.use(cors());
 app.use(express.json());
 app.use('/', express.static(__dirname + '/www')); // serving company logos after successful authentication
-
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Supported slash commands
+app.post('/account', account.execute);
+app.post('/opportunity', opportunity.execute);
+app.post('/findreports', report.execute);
+app.post('/report', report.execute);
+app.post('/runreport', runReport.execute);
+app.post('/whoami', whoami.execute);
+
+// not used
 app.post('/actions', actions.handle);
 app.post('/pipeline', opportunity.execute);
 app.post('/contact', contact.execute);
-app.post('/account', account.execute);
 app.post('/case', _case.execute);
-app.post('/whoami', whoami.execute);
+
+// Oauth related
 app.post('/login', auth.loginLink);
 app.post('/logout', auth.logout);
 app.get('/login/:slackUserId', auth.oauthLogin);

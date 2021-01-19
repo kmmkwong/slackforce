@@ -57,6 +57,11 @@ let query = (oauth, soql) => sfrequest(oauth, '/services/data/' + API_VERSION + 
 );
 
 /**
+ * Run report
+ */
+let runReport = (oauth, reportId) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/' + reportId);
+
+/**
  * Convenience function to retrieve a single record based on its Id
  */
 let retrieve = (oauth, objectName, id, fields) => sfrequest(oauth, '/services/data/' + API_VERSION + '/sobjects/' + objectName + '/' + id,
@@ -177,3 +182,4 @@ exports.upsert = upsert;
 exports.apexrest = apexrest;
 exports.chatter = chatter;
 exports.whoami = whoami;
+exports.runReport = runReport;
