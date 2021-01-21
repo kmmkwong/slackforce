@@ -8,6 +8,7 @@ let express = require('express'),
     account = require('./modules/account'),
     opportunity = require('./modules/opportunity'),
     report = require('./modules/reports'),
+    findReports = require('./modules/findReports'),
     runReport = require('./modules/runReport'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
@@ -15,6 +16,7 @@ let express = require('express'),
     app = express();
 
 
+// THis is the provide rest
 app.enable('trust proxy');
 
 app.set('port', process.env.PORT || 5000);
@@ -27,7 +29,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Supported slash commands
 app.post('/account', account.execute);
 app.post('/opportunity', opportunity.execute);
-app.post('/findreports', report.execute);
+app.post('/findreports', findReports.execute);
 app.post('/report', report.execute);
 app.post('/runreport', runReport.execute);
 app.post('/whoami', whoami.execute);
