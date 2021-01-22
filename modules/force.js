@@ -1,7 +1,7 @@
 "use strict";
 
 let request = require("request"),
-    API_VERSION = 'v35.0';
+    API_VERSION = 'v50.0';
 
 let getUserId = (oauth) => (typeof(oauth) !== 'undefined') ? oauth.id.split('/').pop() : undefined;
 
@@ -60,6 +60,30 @@ let query = (oauth, soql) => sfrequest(oauth, '/services/data/' + API_VERSION + 
  * Run report
  */
 let runReport = (oauth, reportId) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/' + reportId);
+
+/**
+ * query report
+ */
+let queryReport = (oauth, reportMetadata) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/query',
+    {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        json: true,
+        body: {reportMetadata}
+    }
+);
+
+/**
+ * update report
+ */
+let updateReport = (oauth, reportId, updateMetadata) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/' + reportId,
+    {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        json: true,
+        body: {reportMetadata: updateMetadata}
+    }
+);
 
 /**
  * Convenience function to retrieve a single record based on its Id
@@ -183,3 +207,5 @@ exports.apexrest = apexrest;
 exports.chatter = chatter;
 exports.whoami = whoami;
 exports.runReport = runReport;
+exports.queryReport = queryReport;
+exports.updateReport = updateReport;

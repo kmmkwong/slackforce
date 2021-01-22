@@ -10,6 +10,8 @@ let express = require('express'),
     report = require('./modules/reports'),
     findReports = require('./modules/findReports'),
     runReport = require('./modules/runReport'),
+    queryReport = require('./modules/queryReport'),
+    updateReport = require('./modules/updateReport'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
     actions = require('./modules/actions'),
@@ -29,10 +31,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Supported slash commands
 app.post('/account', account.execute);
 app.post('/opportunity', opportunity.execute);
-app.post('/findreports', findReports.execute);
 app.post('/report', report.execute);
-app.post('/runreport', runReport.execute);
 app.post('/whoami', whoami.execute);
+
+// For report bot
+app.post('/findreports', findReports.execute);
+app.post('/runreport', runReport.execute);
+app.post('/queryreport', queryReport.execute);
+app.post('/updatereport', updateReport.execute);
 
 // not used
 app.post('/actions', actions.handle);

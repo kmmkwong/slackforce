@@ -4,6 +4,7 @@ let auth = require("./slack-salesforce-auth"),
   force = require("./force"),
   ACCOUNT_TOKEN = process.env.SLACK_ACCOUNT_TOKEN;
 
+// TODO - does not work with connected app; insufficient privilege error
 exports.execute = (req, res) => {
   // if (req.body.token != ACCOUNT_TOKEN) {
   //     console.log("Invalid token");
@@ -14,16 +15,22 @@ exports.execute = (req, res) => {
   let slackUserId = req.body.user_id,
     oauthObj = auth.getOAuthObject(slackUserId),
     reportId = req.body.report_id;
+  // const slackUserId = req.body.user_id;
+  // const oauthObj = auth.getOAuthObject(slackUserId);
+  // const reportId = req.body.report_id;
+  const reportName = req.body.report_name;
+  const metadataUpdate = req.body.report_update;
 
   force
-    .runReport(oauthObj, reportId)
+    .updateReport(oauthObj, reportId, metadataUpdate)
     .then(data => {
-      const result = JSON.parse(data);
-      let reportAttr = result.attributes;
+      // const result = JSON.parse(data);
+      const result = data;
+      // let reportAttr = result.attributes;
 
       res.json({
-        reportName: reportAttr.reportName,
-        reportId: reportAttr.reportId,
+        originalName: reportName,
+        originalId: reportId,
         result
       });
 
