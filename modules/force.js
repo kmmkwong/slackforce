@@ -62,6 +62,11 @@ let query = (oauth, soql) => sfrequest(oauth, '/services/data/' + API_VERSION + 
 let runReport = (oauth, reportId) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/' + reportId);
 
 /**
+ * Run report
+ */
+let describeReport = (oauth, reportId) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/' + reportId + '/describe');
+
+/**
  * query report
  */
 let queryReport = (oauth, reportMetadata) => sfrequest(oauth, '/services/data/' + API_VERSION + '/analytics/reports/query',
@@ -209,3 +214,4 @@ exports.whoami = whoami;
 exports.runReport = runReport;
 exports.queryReport = queryReport;
 exports.updateReport = updateReport;
+exports.describeReport = describeReport;

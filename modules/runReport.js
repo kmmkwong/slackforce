@@ -24,6 +24,7 @@ exports.execute = (req, res) => {
       res.json({
         reportName: reportAttr.reportName,
         reportId: reportAttr.reportId,
+        url: oauthObj.instance_url + "/" + reportId,
         result
       });
 

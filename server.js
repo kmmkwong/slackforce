@@ -12,6 +12,7 @@ let express = require('express'),
     runReport = require('./modules/runReport'),
     queryReport = require('./modules/queryReport'),
     updateReport = require('./modules/updateReport'),
+    describeReport = require('./modules/describeReport'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
     actions = require('./modules/actions'),
@@ -39,6 +40,7 @@ app.post('/findreports', findReports.execute);
 app.post('/runreport', runReport.execute);
 app.post('/queryreport', queryReport.execute);
 app.post('/updatereport', updateReport.execute);
+app.post('/describereport', describeReport.execute);
 
 // not used
 app.post('/actions', actions.handle);
