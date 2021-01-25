@@ -19,7 +19,7 @@ let express = require('express'),
     app = express();
 
 
-// THis is the provide rest
+// This node server provides REST APIs to acess SF
 app.enable('trust proxy');
 
 app.set('port', process.env.PORT || 5000);
